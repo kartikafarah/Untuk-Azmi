@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Love❤️</title>
+    <!-- Font Google: Plus Jakarta Sans & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-maroon-1: #2a080c;
+            --bg-maroon-2: #4a0e17;
+            --bg-maroon-3: #1a0406;
+            --card-glass: rgba(58, 12, 18, 0.65);
+            --card-border: rgba(255, 182, 193, 0.2);
+            --accent-gold: #ffd1dc;
+            --text-light: #fff5f6;
+            --text-muted: #e2a4ac;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-maroon-3), var(--bg-maroon-1), var(--bg-maroon-2));
+            background-size: 300% 300%;
+            animation: gradientMove 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-light);
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Background Hearts (Biar Tidak Kaku & Hidup) */
+        .floating-hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(255, 107, 129, 0.25);
+            font-size: 20px;
+            animation: floatUp 8s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.6) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* Ambient Glow */
+        .ambient-glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(165, 29, 49, 0.35) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(60px);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Main Container: Bentuk Organik & Smooth */
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 90%;
+            max-width: 680px;
+            height: 530px;
+            background: var(--card-glass);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border: 1px solid var(--card-border);
+            border-radius: 32px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Header Minimalis Lembut */
+        .organic-header {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .header-title-tag {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .header-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot-mini {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .content-area {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Screen Transitions */
+        .screen {
+            position: absolute;
+            inset: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95) translateY(15px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Screen 1: Welcome */
+        .welcome-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .welcome-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .heart-gift-btn {
+            background: linear-gradient(135deg, #a51d31, #ff6b81);
+            border: none;
+            border-radius: 50px;
+            padding: 18px 36px;
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(165, 29, 49, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .heart-gift-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.6);
+        }
+
+        /* Screen 2: Menu Pilihan Fluid */
+        .menu-prompt {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .menu-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 22px 15px;
+            width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(165, 29, 49, 0.25);
+            border-color: rgba(255, 107, 129, 0.4);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .menu-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Screen 3: Cake & Candle */
+        .cake-container {
+            font-size: 85px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            user-select: none;
+        }
+        .cake-container:hover {
+            transform: scale(1.1);
+        }
+
+        /* Screen 4: 10 Polaroid Photos Scrollable */
+        .polaroid-scroll-area {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 10px 15px 40px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            scroll-behavior: smooth;
+        }
+
+        .polaroid-scroll-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        .polaroid-scroll-area::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .polaroid-scroll-area::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 129, 0.3);
+            border-radius: 10px;
+        }
+        .polaroid-scroll-area::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 129, 0.6);
+        }
+
+        .polaroid-item {
+            background: #fff;
+            padding: 12px 12px 22px 12px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            width: 270px;
+            transition: all 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .polaroid-item:hover {
+            transform: scale(1.04) rotate(0deg) !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .polaroid-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .polaroid-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            color: #2a080c;
+            text-align: center;
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        /* Screen 5: Surat Cinta Maroon Estetik */
+        .love-letter-box {
+            background: rgba(42, 8, 12, 0.7);
+            border: 1px solid rgba(255, 182, 193, 0.15);
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 100%;
+            max-height: 100%;
+            overflow-y: auto;
+            text-align: left;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .love-letter-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+        }
+
+        .love-letter-box p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        /* Tombol Kembali Fluid */
+        .back-nav-btn {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-light);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            display: none;
+            z-index: 20;
+        }
+
+        .back-nav-btn:hover {
+            background: rgba(165, 29, 49, 0.6);
+            border-color: rgba(255, 107, 129, 0.4);
+            transform: translateX(-3px);
+        }
+
+        /* Floating Audio Button */
+        .music-float-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(42, 8, 12, 0.75);
+            border: 1px solid rgba(255, 182, 193, 0.25);
+            padding: 10px 18px;
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .music-float-btn:hover {
+            background: rgba(165, 29, 49, 0.8);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow" style="top: 10%; left: 15%;"></div>
+    <div class="ambient-glow" style="bottom: 10%; right: 15%;"></div>
+
+    <!-- Animasi Partikel Hati di Latar Belakang -->
+    <div class="floating-hearts" id="hearts-container"></div>
+
+    <!-- Tombol Musik -->
+    <button class="music-float-btn" onclick="toggleAudio()">
+        🎵 <span id="music-label">Play Music</span>
+    </button>
+   <audio id="romantic-audio" loop>
+    <source src="Sal Priadi - Mesra-mesraannya kecil-kecilan dulu (Official Music Video).mp3" type="audio/ogg">
+</audio>
+
+    <div class="main-wrapper">
+        <div class="organic-header">
+            <div class="header-title-tag">Dari acu, pujaan hati kamuh</div>
+            <div class="header-dots">
+                <div class="dot-mini"></div>
+                <div class="dot-mini"></div>
+                <div class="dot-mini"></div>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <!-- Screen 1: Welcome -->
+            <div class="screen active" id="screen-welcome">
+                <div class="welcome-title">Happy Birthday,<br>Sayangggg ❤️</div>
+                <div class="welcome-subtitle">to the man who makes my world a little brighter, today is all about you..</div>
+                <button class="heart-gift-btn" onclick="goToScreen('screen-menu')">
+                    <span>Klik cayang</span>
+                </button>
+            </div>
+
+            <!-- Screen 2: Menu Utama -->
+            <div class="screen" id="screen-menu">
+                <div class="menu-prompt">"Mau buka bagian mana duyu, cayang?"</div>
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="goToScreen('screen-cake')">
+                        <div class="menu-icon">🎂</div>
+                        <div class="menu-label">Make a Wish</div>
+                    </div>
+                    <div class="menu-card" onclick="goToScreen('screen-gallery')">
+                        <div class="menu-icon">🖼️</div>
+                        <div class="menu-label">Our Memories</div>
+                    </div>
+                    <div class="menu-card" onclick="goToScreen('screen-letter')">
+                        <div class="menu-icon">💌</div>
+                        <div class="menu-label">Love Letter</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen 3: Kue Ulang Tahun -->
+            <div class="screen" id="screen-cake">
+                <h2 style="font-family:'Playfair Display',serif; font-size: 26px; color: #fff;">Make a Wish! 🕯️</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Ketuk kue di bawah untuk meniup lilinnya</p>
+                <div class="cake-container" id="cake-el" onclick="blowCandle()">🎂🔥</div>
+                <p id="wish-feedback" style="font-size: 14px; font-weight: 600; color: var(--accent-gold); min-height: 25px; text-align: center;"></p>
+            </div>
+
+            <!-- Screen 4: 10 Polaroid Photos (Scrollable) -->
+            <div class="screen" id="screen-gallery" style="padding: 15px 10px 40px 10px;">
+                <div class="polaroid-scroll-area">
+                    <!-- Foto 1 - 10 -->
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.16.jpeg" alt="1"><div class="polaroid-text">FOTO KICIL FAV AKU ✨</div></div>
+                    <div class="polaroid-item" style="transform: rotate(2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.17 (1).jpeg" alt="2"><div class="polaroid-text">Cibontot kutangan 🥰</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-3deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.17.jpeg" alt="3"><div class="polaroid-text">Dede main perosotan sama mbak</div></div>
+                    <div class="polaroid-item" style="transform: rotate(1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.18.jpeg" alt="4"><div class="polaroid-text">Meluk meluk sp bic</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.19 (1).jpeg" alt="5"><div class="polaroid-text">Smirk kece! 😎</div></div>
+                    <div class="polaroid-item" style="transform: rotate(3deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.19 (2).jpeg" alt="6"><div class="polaroid-text">Semangat damkar 📸</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.19.jpeg" alt="7"><div class="polaroid-text">MANIS BGTT GEMES 🌟</div></div>
+                    <div class="polaroid-item" style="transform: rotate(2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.20.jpeg" alt="8"><div class="polaroid-text">Ngeselin tapi gemes</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.26.13.jpeg" alt="9"><div class="polaroid-text">Ngunyah 💕</div></div>
+                    <div class="polaroid-item" style="transform: rotate(1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.09 (1).jpeg" alt="10"><div class="polaroid-text">CIBONTOT DAN BAPAK</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.09.jpeg" alt="9"><div class="polaroid-text">Always Juventus</div></div>
+                    <div class="polaroid-item" style="transform: rotate(2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.10.jpeg" alt="2"><div class="polaroid-text">BESOK DIET? 🥰</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-3deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.11 (1).jpeg" alt="3"><div class="polaroid-text">Nanti seleksi gambar ini aja</div></div>
+                    <div class="polaroid-item" style="transform: rotate(1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.11.jpeg" alt="4"><div class="polaroid-text">Gambar sama bestih</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.12.jpeg" alt="5"><div class="polaroid-text">Best partner in everything! 😎</div></div>
+                    <div class="polaroid-item" style="transform: rotate(3deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.13 (1).jpeg" alt="6"><div class="polaroid-text">Sukakkk bgtt kalo digenggam</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.13.jpeg" alt="7"><div class="polaroid-text">Diperiksa dulu dek 🌟</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.14 (2).jpeg" alt="9"><div class="polaroid-text">Jangan ngebut ngebut dek 💕</div></div>
+                    <div class="polaroid-item" style="transform: rotate(2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.14.jpeg" alt="2"><div class="polaroid-text">Kusinkkkk 🥰</div></div>
+                    <div class="polaroid-item" style="transform: rotate(3deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.15 (1).jpeg" alt="6"><div class="polaroid-text">Ciisss duyuu 📸</div></div>
+                    <div class="polaroid-item" style="transform: rotate(1deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.15 (2).jpeg" alt="4"><div class="polaroid-text">Kusinkkkk 🤍</div></div>
+                    <div class="polaroid-item" style="transform: rotate(-2deg);"><img src="WhatsApp Image 2026-10-19 at 22.25.15.jpeg" alt="9"><div class="polaroid-text">Kusinkkkkk 💕</div></div>
+                </div>
+            </div>
+
+            <!-- Screen 5: Love Letter -->
+            <div class="screen" id="screen-letter">
+                <div class="love-letter-box">
+                    <h3>Selamat ulang tahun yang ke 19 sayanggg❤️</h3>
+                    <p>Akuuu punya banyak doa buat kamuuu. Semoga kamu selalu dikasih kesehatan, dilancarin rezeki kamuu, diperlancar urusan kamu dan masa depan kamu, selalu disertai hal hal baik. Jangan lupa  selalu sayang sama diri sendiri, sama aku juga xixixi, jangan terlalu keras sama diri sendiri cuma karna sesuatu yang belum kamu capai.</p>
+                    <p>Jangan ngerasa kamu tertinggal cuma karenaa perjalanan kamu beda sama orang lain, kamu punya jalan kamu sendiri. Pokooonyaa selalu yang terbaik buat kamuuuuu. Semoga kita juga bisa bertahan sesuai dengan yang kita harapkan yaa sayanggg.</p>
+                    <p>Just take your time, believe in yourself, and remember that i'm always proud of you. not because you're perfect, but because you're you, and to me, that's more than enough.</p>
+                    <p>happy 19th birthday, loveeee.</p>
+                    <p style="text-align: right; font-weight: 700; color: var(--accent-gold); margin-top: 15px;">— Dari iwill 💕</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tombol Kembali -->
+        <button class="back-nav-btn" id="back-btn" onclick="goToScreen('screen-menu')">⬅ Kembali ke Menu</button>
+    </div>
+
+    <script>
+        // Membuat Partikel Hati Mengambang Otomatis
+        const heartsContainer = document.getElementById('hearts-container');
+        const heartSymbols = ['❤️', '✨', '💖', '🌹'];
+        
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-particle');
+            heart.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }, 600);
+
+        // Navigasi Antar Halaman yang Mulus
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+
+            const backBtn = document.getElementById('back-btn');
+            if (screenId === 'screen-welcome' || screenId === 'screen-menu') {
+                backBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'block';
+            }
+        }
+
+        // Tiup Lilin
+        function blowCandle() {
+            document.getElementById('cake-el').innerHTML = '🎂✨';
+            document.getElementById('wish-feedback').innerHTML = 'Hore! Lilin berhasil ditiup. Semoga semua doa dan harapanmu terkabul ya sayangggggg! Nanti kita tiup lilin beneran yaaaa';
+        }
+
+        // Pengontrol Musik
+        let isAudioPlaying = false;
+        const audioPlayer = document.getElementById('romantic-audio');
+        const musicLabel = document.getElementById('music-label');
+
+        function toggleAudio() {
+            if (!isAudioPlaying) {
+                audioPlayer.play().catch(() => {});
+                musicLabel.innerText = "Stop Music 🎶";
+                isAudioPlaying = true;
+            } else {
+                audioPlayer.pause();
+                musicLabel.innerText = "Play Music 🎵";
+                isAudioPlaying = false;
+            }
+        }
+    </script>
+</body>
+</html>
